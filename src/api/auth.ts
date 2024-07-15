@@ -6,3 +6,7 @@ export const loginRequest = async (email: string, password: string) => {
     password,
   });
 };
+
+export const verifyTokenRequest = async () => {
+  return axios.get("http://localhost:3000/api/auth/verify");
+};

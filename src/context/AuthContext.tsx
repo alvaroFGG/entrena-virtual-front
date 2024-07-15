@@ -1,6 +1,13 @@
-import { createContext, Dispatch, SetStateAction, useState } from "react";
-import { loginUseCase } from "../use-case/login-use-case";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { loginUseCase } from "../use-case/auth-use-case";
 import { User } from "../types";
+import { verifyTokenRequest } from "../api/auth";
 
 export interface IAuthContext {
   user: User | null;
@@ -29,6 +36,22 @@ export const AuthProvider = ({ children }: Props) => {
 
     setUser(data);
   };
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const { data } = await verifyTokenRequest();
+
+        console.log(data);
+
+        setUser(data);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    checkLogin();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser, login, error }}>
