@@ -7,12 +7,14 @@ import {
 } from "react";
 import { loginUseCase, verifyTokenUseCase } from "../use-case/auth-use-case";
 import { User } from "../types";
+import Cookies from "js-cookie";
 
 export interface IAuthContext {
   user: User | null;
   setUser: Dispatch<SetStateAction<null>>;
   login: (email: string, password: string) => void;
   error: string | null;
+  logout: () => void;
 }
 
 export const AuthContext = createContext({} as IAuthContext);
@@ -36,6 +38,11 @@ export const AuthProvider = ({ children }: Props) => {
     setUser(data);
   };
 
+  const logout = () => {
+    Cookies.remove("token");
+    setUser(null);
+  };
+
   useEffect(() => {
     const checkLogin = async () => {
       try {
@@ -51,7 +58,7 @@ export const AuthProvider = ({ children }: Props) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, error }}>
+    <AuthContext.Provider value={{ user, setUser, login, error, logout }}>
       {children}
     </AuthContext.Provider>
   );

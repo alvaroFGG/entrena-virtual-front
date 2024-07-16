@@ -1,8 +1,9 @@
+import dayjs from "dayjs";
 import { useAuth } from "../../hooks/useAuth";
 import "./home.css";
 
 const HomePage = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="home-container">
@@ -10,9 +11,13 @@ const HomePage = () => {
 
       <span>Email: {user?.email}</span>
 
-      <span>Birth Date: {user?.birthDate}</span>
+      <span>Birth Date: {dayjs(user?.birthDate).format("DD/MM/YYYY")}</span>
 
       <span>Age: {user?.age}</span>
+
+      <button className="home-container__button" onClick={logout}>
+        Logout
+      </button>
     </div>
   );
 };
