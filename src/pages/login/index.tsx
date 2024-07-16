@@ -29,12 +29,15 @@ const LoginPage = () => {
         <input
           type="email"
           placeholder="Email"
+          id="email"
           {...register("email", { required: true })}
         />
-        {errors.email && <span>This field is required</span>}
+        {errors.email && (
+          <span id="required-email">This field is required</span>
+        )}
 
         {watchedEmail && !REGEX.EMAIL.test(watchedEmail) && (
-          <span>Invalid email</span>
+          <span id="incorrect-email">Invalid email</span>
         )}
       </div>
 
@@ -42,13 +45,16 @@ const LoginPage = () => {
         <label htmlFor="">Password</label>
         <input
           type="password"
+          id="password"
           placeholder="Password"
           {...register("password", { required: true })}
         />
-        {errors.password && <span>This field is required</span>}
+        {errors.password && (
+          <span id="required-password">This field is required</span>
+        )}
       </div>
 
-      {error && <span>{error}</span>}
+      {error && <span id="error">{error}</span>}
 
       <button>{loading ? "Loading..." : "Login"}</button>
     </form>
