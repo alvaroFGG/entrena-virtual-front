@@ -5,9 +5,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { loginUseCase } from "../use-case/auth-use-case";
+import { loginUseCase, verifyTokenUseCase } from "../use-case/auth-use-case";
 import { User } from "../types";
-import { verifyTokenRequest } from "../api/auth";
 
 export interface IAuthContext {
   user: User | null;
@@ -40,9 +39,7 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const { data } = await verifyTokenRequest();
-
-        console.log(data);
+        const { data } = await verifyTokenUseCase();
 
         setUser(data);
       } catch (e) {
