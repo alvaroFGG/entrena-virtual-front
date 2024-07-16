@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from "./axios";
 
 export const loginRequest = async (email: string, password: string) => {
-  return axios.post("http://localhost:3000/api/auth/login", {
+  return axios.post("/auth/login", {
     email,
     password,
   });
 };
 
 export const verifyTokenRequest = async () => {
-  return axios.get("http://localhost:3000/api/auth/verify");
+  return axios.get("/auth/verify");
 };
