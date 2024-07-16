@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import "./login.css";
 import { useAuth } from "../../hooks/useAuth";
+import { REGEX } from "../../types";
 
 const LoginPage = () => {
   const { login, error, loading } = useAuth();
@@ -8,11 +9,14 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<{
     email: string;
     password: string;
   }>();
+
+  const watchedEmail = watch("email");
 
   const onSubmit = (data: { email: string; password: string }) => {
     login(data.email, data.password);
@@ -28,6 +32,10 @@ const LoginPage = () => {
           {...register("email", { required: true })}
         />
         {errors.email && <span>This field is required</span>}
+
+        {watchedEmail && !REGEX.EMAIL.test(watchedEmail) && (
+          <span>Invalid email</span>
+        )}
       </div>
 
       <div className="login-container__input">
