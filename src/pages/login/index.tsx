@@ -1,13 +1,9 @@
 import { useForm } from "react-hook-form";
 import "./login.css";
 import { useAuth } from "../../hooks/useAuth";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-
-  const { login, error, user } = useAuth();
+  const { login, error, loading } = useAuth();
 
   const {
     register,
@@ -21,13 +17,6 @@ const LoginPage = () => {
   const onSubmit = (data: { email: string; password: string }) => {
     login(data.email, data.password);
   };
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
 
   return (
     <form className="login-container" onSubmit={handleSubmit(onSubmit)}>
@@ -53,7 +42,7 @@ const LoginPage = () => {
 
       {error && <span>{error}</span>}
 
-      <button>Login</button>
+      <button>{loading ? "Loading..." : "Login"}</button>
     </form>
   );
 };

@@ -3,8 +3,11 @@ import { useAuth } from "../../hooks/useAuth";
 import "./home.css";
 
 const HomePage = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
 
+  if (loading) {
+    return <span>Loading...</span>;
+  }
   return (
     <div className="home-container">
       <span className="home-container__title">Private Panel</span>
